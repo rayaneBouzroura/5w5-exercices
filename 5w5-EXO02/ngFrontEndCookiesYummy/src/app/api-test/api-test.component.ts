@@ -1,3 +1,4 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
@@ -27,7 +28,7 @@ export class ApiTestComponent {
   Url = 'https://localhost:7170/api/User/';
 
 
-  constructor (private http : HttpClient) {}
+  constructor (private http : HttpClient  ) {}
 
   async getPublicData(): Promise<String[]>{
     console.log("Debut appelle API pour getPublicData");
@@ -48,7 +49,7 @@ export class ApiTestComponent {
     let options = { withCredentials: true };
     //console log the link
     console.log(this.Url + 'Register');
-    let result = await lastValueFrom(this.http.post<any>(this.Url + 'Register', this.registerDto, options));
+    let result = await lastValueFrom(this.http.post<any>(this.Url + 'Register', this.registerDto));
     console.log("Response:", result);
 
   }
@@ -57,7 +58,7 @@ export class ApiTestComponent {
   async getPrivateData(): Promise<String[]>{
 
     let options = { withCredentials: true };
-    let result = await lastValueFrom(this.http.get<String[]>('https://localhost:7170/api/User/PrivateData', options));
+    let result = await lastValueFrom(this.http.get<String[]>('https://localhost:7170/api/User/PrivateData'));
     console.log("Response:", result);
     return result ?? [];
   }
@@ -65,16 +66,20 @@ export class ApiTestComponent {
   //now we login
   async login(){
     let options = { withCredentials: true };
-    let result = await lastValueFrom(this.http.post<any>(this.Url + 'Login', this.loginDto, options));
+    let result = await lastValueFrom(this.http.post<any>(this.Url + 'Login', this.loginDto));
     console.log("Response:", result);
   }
 
 
   async logout(){
     let options = { withCredentials: true };
-    let result = await lastValueFrom(this.http.post<any>(this.Url + 'Logout', null, options));
+    let result = await lastValueFrom(this.http.post<any>(this.Url + 'Logout', null));
     console.log("Response:", result);
   }
+
+//   isLoggedIn(){
+//     return this.cookieService.get(".AspNetCore.Identity.Application");
+// }
 
 
 }
